@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+
+<body style="font-family: Arial; font-size: 14px;">
+
+<p>Olá!</p>
+
+<p>Veja a seguir um relatório analítico dos registros de retrabalho relacionados ao seu departamento:</p>
+
+<p>
+    <table border="1" style="width: 100%; border-collapse: collapse;  margin: 20px 0">
+        <thead>
+            <tr>
+                <th>Protocolo</th>
+                <th>Motivo</th>
+                <th>Funcion&aacute;rio</th>
+                <th>Func. Registro</th>
+                <th>Data/Hora Registro</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr th:each="retrabalho: ${retrabalhos}" style="text-align: center"
+				th:styleappend="${retrabalho.motivoRetrabalho.erroCritico} ? 'color: #ff0000;' : 'color: #000000;'">
+
+					<td th:text="${retrabalho.protocolo}">1910000</td>
+					<td th:text="${retrabalho.motivoRetrabalho.descricao}">Erro posologia</td>
+					<td th:text="${retrabalho.funcionario.nome}">Funcionario Erro</td>
+					<td th:text="${retrabalho.funcionarioRegistro.nome}">Funcionario Registro</td>
+					<td th:text="${#temporals.format(retrabalho.dataHoraCriacao, 'dd/MM/yyyy HH:mm')}">03/10/2019 17:22</td>
+
+            </tr>
+        </tbody>
+    </table>
+</p>
+
+<p>Obrigado.</p>
+<p>Alexfarma | Sistema de Gestão da Qualidade</p>
+
+</body>
+</html>

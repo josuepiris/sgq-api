@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+
+<body style="font-family: Arial; font-size: 14px;">
+
+<p>Olá!</p>
+
+<p>
+	Veja a seguir um relat&oacute;rio anal&iacute;tico dos registros de retrabalho possivelmente duplicados:<br />
+	Obs.: Os registros devem ser analisados e exclu&iacute;dos manualmente, se necess&aacute;rio!
+</p>
+
+<p>
+    <table border="1" style="width: 100%; border-collapse: collapse;  margin: 20px 0">
+        <thead>
+            <tr>
+                <th>Protocolo</th>
+                <th>Motivo</th>
+                <th>Func. de Registro</th>
+                <th>Data do Registro</th>
+                <th>Qtd. Repeti&ccedil;&otilde;es</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr th:each="registro: ${registros}" style="text-align: center">
+
+					<td th:text="${registro.protocolo}">123456789</td>
+					<td th:text="${registro.motivoRetrabalho}">Erro posologia</td>
+					<td th:text="${registro.funcionarioRegistro}">Funcionario Registro</td>
+					<td th:text="${#temporals.format(registro.dataRegistro, 'dd/MM/yyyy')}">03/10/2019</td>
+					<td th:text="${registro.repeticoes}">2</td>
+
+            </tr>
+        </tbody>
+    </table>
+</p>
+
+<p>Obrigado.</p>
+<p>Alexfarma | Sistema de Gest&atilde;o da Qualidade</p>
+
+</body>
+</html>

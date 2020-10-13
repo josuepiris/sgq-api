@@ -1,0 +1,1 @@
+ALTER TABLE retrabalho ADD COLUMN numero_formula BIGINT(20) NOT NULL AFTER protocolo;

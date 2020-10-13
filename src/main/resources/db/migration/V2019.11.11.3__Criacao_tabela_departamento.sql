@@ -1,0 +1,8 @@
+CREATE TABLE departamento (
+	codigo BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+	nome VARCHAR(60) NOT NULL,
+	email VARCHAR(40) NOT NULL,
+	codigo_processo BIGINT(20) NOT NULL,
+	ativo BOOLEAN DEFAULT TRUE,
+FOREIGN KEY (codigo_processo) REFERENCES processo(codigo)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

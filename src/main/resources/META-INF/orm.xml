@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings
+    xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/orm_2_2.xsd"
+    version="2.2">
+
+	<named-native-query name="Usuario.removerUsuario">
+		<query>
+			DELETE FROM usuario
+				WHERE funcionario_id = :funcionarioId
+		</query>
+	</named-native-query>
+
+	<named-query name="Usuario.listarAtivos">
+  		<query>
+  			SELECT u FROM Usuario u
+				WHERE (u.userId IS NOT NULL OR u.codigoAutenticacao IS NOT NULL) AND u.ativo IS TRUE
+  		</query>
+	</named-query>
+
+	<named-query name="Retrabalho.buscarRegistrosDuplicados">
+		<query>
+			SELECT new br.com.alexfarma.sgq.api.repository.projection.RegistroRetrabalhoDuplicado(
+				a.protocolo, b.descricao AS motivoRetrabalho, c.nome AS funcionarioRegistro, DATE(a.dataHoraCriacao) AS dataRegistro, COUNT(a) AS repeticoes)
+					FROM Retrabalho a
+					INNER JOIN a.motivoRetrabalho b
+					INNER JOIN a.funcionarioRegistro c
+					INNER JOIN a.departamento d
+					WHERE a.ignorarDuplicado IS FALSE
+						AND d.codigo = :codigoDepartamento
+					GROUP BY a.protocolo, a.numeroFormula, b.codigo, c.funcionarioId, DATE(a.dataHoraCriacao)
+					HAVING COUNT(a) > 1
+		</query>
+	</named-query>
+
+	<named-query name="Retrabalho.buscarPrimeiroAndUltimoRegistro">
+		<query>
+			SELECT new br.com.alexfarma.sgq.api.dto.PrimeiroAndUltimoRegistro(
+				MIN(DATE(r.dataHoraCriacao)), MAX(DATE(r.dataHoraCriacao))) FROM Retrabalho r
+		</query>
+	</named-query>
+
+</entity-mappings>
